@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 时间工具类
- * 
+ *
  * @author chenchuancheng
  * @since 2023/11/26 19:46
  */
@@ -825,12 +825,30 @@ public class TimeUtils {
 
     public static Date getYearStart(Date date) {
         DateNode dateNode = getDateNode(date);
-        return getMonthDateStart(addMonth(date, 1-dateNode.getMonth()));
+        return getMonthDateStart(addMonth(date, 1 - dateNode.getMonth()));
     }
 
     public static Date getYearEnd(Date date) {
         DateNode dateNode = getDateNode(date);
         return getMonthDateEnd(addMonth(date, 12 - dateNode.getMonth()));
+    }
+
+    public static Date getHourStart(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
+
+    public static Date getHourEnd(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        return calendar.getTime();
     }
 
     static class DateNode {
