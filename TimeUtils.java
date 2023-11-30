@@ -823,16 +823,25 @@ public class TimeUtils {
         return sb.toString();
     }
 
+    /**
+     * 获取date所属年的起始日期
+     */
     public static Date getYearStart(Date date) {
         DateNode dateNode = getDateNode(date);
         return getMonthDateStart(addMonth(date, 1 - dateNode.getMonth()));
     }
 
+    /**
+     * 获取date所属年的截止日期
+     */
     public static Date getYearEnd(Date date) {
         DateNode dateNode = getDateNode(date);
         return getMonthDateEnd(addMonth(date, 12 - dateNode.getMonth()));
     }
 
+    /**
+     * 获取date所属时的起始日期
+     */
     public static Date getHourStart(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -842,12 +851,71 @@ public class TimeUtils {
         return calendar.getTime();
     }
 
+    /**
+     * 获取date所属时的截止日期
+     */
     public static Date getHourEnd(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.SECOND, 59);
         calendar.set(Calendar.MILLISECOND, 999);
+        return calendar.getTime();
+    }
+
+
+    public static Date floorToTenMinutes(Date date) {
+        return floorToMinutes(date, 10);
+    }
+
+
+    public static Date upToTenMinutes(Date date) {
+        return upToMinutes(date, 10);
+    }
+
+    /**
+     * 将date向下取整到最近的i分钟的倍数
+     * <p>
+     * 比如date为20231130233232 i为4
+     * 那么date向下取整为20231130233200
+     * 那么date向上取整为20231130233600
+     *
+     * @param date 时间
+     * @param i    表示向下取整到最近的i分钟，不可为负数
+     */
+    public static Date floorToMinutes(Date date, int i) {
+        if (i < 0) {
+            i = -i;
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        int minute = calendar.get(Calendar.MINUTE);
+        calendar.set(Calendar.MINUTE, minute - (minute % i));
+        return calendar.getTime();
+    }
+
+    /**
+     * 将date向上取整到最近的i分钟的倍数
+     * <p>
+     * 比如date为20231130233232 i为4
+     * 那么date向下取整为20231130233200
+     * 那么date向上取整为20231130233600
+     *
+     * @param date 时间
+     * @param i    表示向上取整到最近的i分钟，不可为负数
+     */
+    public static Date upToMinutes(Date date, int i) {
+        if (i < 0) {
+            i = -i;
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        int minute = calendar.get(Calendar.MINUTE);
+        calendar.set(Calendar.MINUTE, minute + (i - minute % i));
         return calendar.getTime();
     }
 
