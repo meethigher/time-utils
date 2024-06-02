@@ -1,4 +1,4 @@
-package top.meethigher;
+package top.meethigher.cpu;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -797,7 +797,7 @@ public class TimeUtils {
      * @param stamp2 毫秒时间戳
      * @return 人性化描述
      */
-    public static String formatTimeDuration(long stamp1, long stamp2) {
+    public static String humanizedFormat(long stamp1, long stamp2) {
         long duration = Math.abs(stamp1 - stamp2);
         long days = TimeUnit.MILLISECONDS.toDays(duration);
         long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
@@ -806,19 +806,19 @@ public class TimeUtils {
         long milliseconds = duration % 1000;
         StringBuilder sb = new StringBuilder();
         if (days > 0) {
-            sb.append(days).append("天");
+            sb.append(days).append(" D");
         }
         if (hours > 0) {
-            sb.append(hours).append("时");
+            sb.append(hours).append(" H");
         }
         if (minutes > 0) {
-            sb.append(minutes).append("分");
+            sb.append(minutes).append(" M");
         }
         if (seconds > 0) {
-            sb.append(seconds).append("秒");
+            sb.append(seconds).append(" S");
         }
         if (milliseconds > 0) {
-            sb.append(milliseconds).append("毫秒");
+            sb.append(milliseconds).append(" MS");
         }
         return sb.toString();
     }
