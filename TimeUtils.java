@@ -1,9 +1,8 @@
-package top.meethigher.cpu;
+package top.meethigher.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 时间工具类
@@ -798,29 +797,16 @@ public class TimeUtils {
      * @return 人性化描述
      */
     public static String humanizedFormat(long stamp1, long stamp2) {
-        long duration = Math.abs(stamp1 - stamp2);
-        long days = TimeUnit.MILLISECONDS.toDays(duration);
-        long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
-        long seconds = TimeUnit.MILLISECONDS.toSeconds(duration) % 60;
-        long milliseconds = duration % 1000;
-        StringBuilder sb = new StringBuilder();
-        if (days > 0) {
-            sb.append(days).append(" D");
-        }
-        if (hours > 0) {
-            sb.append(hours).append(" H");
-        }
-        if (minutes > 0) {
-            sb.append(minutes).append(" M");
-        }
-        if (seconds > 0) {
-            sb.append(seconds).append(" S");
-        }
-        if (milliseconds > 0) {
-            sb.append(milliseconds).append(" MS");
-        }
-        return sb.toString();
+        // 计算时间差（毫秒）
+        long diffInMillis = Math.abs(stamp2 - stamp1);
+
+        // 将毫秒转换为小时、分钟和秒
+        long hours = diffInMillis / (1000 * 60 * 60);
+        long minutes = (diffInMillis / (1000 * 60)) % 60;
+        long seconds = (diffInMillis / 1000) % 60;
+
+        // 格式化并返回结果字符串
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
     /**
